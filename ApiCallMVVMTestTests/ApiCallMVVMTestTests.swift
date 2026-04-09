@@ -5,33 +5,64 @@
 //  Created by Harsh on 09/04/26.
 //
 
+@testable import ApiCallMVVMTest
 import XCTest
 
 final class ApiCallMVVMTestTests: XCTestCase {
-
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        print("🔵 setUp - before each test")
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        print("🔴 tearDown - after each test")
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-        // XCTest Documentation
-        // https://developer.apple.com/documentation/xctest
+    func testAssertions() {
+        print("🧪 testAssertions started")
+
+        let a = 5
+        let b = 5
+        let c: Int? = nil
+
+        XCTAssertEqual(a, b)
+        print("✅ XCTAssertEqual passed")
+
+        XCTAssertTrue(a == b)
+        print("✅ XCTAssertTrue passed")
+
+        XCTAssertFalse(a == 10)
+        print("✅ XCTAssertFalse passed")
+
+        XCTAssertNil(c)
+        print("✅ XCTAssertNil passed")
+
+        XCTAssertNotNil(a)
+        print("✅ XCTAssertNotNil passed")
     }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        measure {
-            // Put the code you want to measure the time of here.
+    func testAsyncExample() async {
+        print("🧪 testAsyncExample started")
+
+        let exp = expectation(description: "Async wait")
+
+        DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) {
+            print("⏳ Async work done")
+            exp.fulfill()
         }
+
+        await fulfillment(of: [exp], timeout: 1)
+        print("✅ Async test completed")
     }
 
+    func testPerformanceExample() {
+        print("🧪 testPerformanceExample started")
+
+        measure {
+            for _ in 0 ..< 1000 {
+                _ = UUID().uuidString
+            }
+        }
+
+        print("⚡ Performance measured")
+    }
 }

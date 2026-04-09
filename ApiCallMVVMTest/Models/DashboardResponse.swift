@@ -1,9 +1,10 @@
 //
-//  Untitled 4.swift
+//  DashboardResponse.swift
 //  ApiCallMVVMTest
 //
 //  Created by Harsh on 09/04/26.
 //
+
 import Foundation
 
 // This represents full API response
