@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ApiCallMVVMTest Detailed Explanation</title>
+    
 </head>
 <body>
 
@@ -229,3 +229,21 @@ This project demonstrates how to build a structured, testable, and maintainable 
 
 </body>
 </html>
+
+
+<h2>👨‍💻 Author</h2>
+
+<p>
+<b>Harsh Darji — iOS Developer 🚀</b>
+</p>
+
+<ul>
+<li><b>Developer:</b> Harsh</li>
+<li><b>Role:</b> Senior iOS Engineer (Swift & UIKit Specialist)</li>
+<li><b>Phone:</b> <a href="tel:+919662108047">+91 9662108047</a></li>
+<li><b>Email:</b> <a href="mailto:dev.iharsh1008@gmail.com">dev.iharsh1008@gmail.com</a></li>
+<li><b>GitHub:</b> <a href="https://github.com/dev1008iharsh">dev1008iharsh</a></li>
+<li><b>LinkedIn:</b> <a href="https://www.linkedin.com/in/dev1008iharsh/">dev1008iharsh</a></li>
+</ul>
+
+---
