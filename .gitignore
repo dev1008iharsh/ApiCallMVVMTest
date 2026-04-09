@@ -1,0 +1,30 @@
+# Xcode
+DerivedData/
+build/
+
+# User settings
+*.xcuserdata/
+*.xcuserstate
+
+# Swift Package Manager
+.swiftpm/
+
+# CocoaPods (if used later)
+Pods/
+
+# Carthage (if used)
+Carthage/
+
+# Fastlane (optional)
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/
+
+# macOS
+.DS_Store
+
+# Logs
+*.log
+
+# Temporary files
+*.swp
