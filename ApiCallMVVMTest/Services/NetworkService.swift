@@ -1,51 +1,56 @@
-//
-//  NetworkService.swift
-//  ApiCallMVVMTest
-//
-//  Created by Harsh on 09/04/26.
-//
 import Foundation
 
-// Protocol for testability (important for unit testing)
+/// Protocol abstraction for testability (mocking आसान बने)
 protocol NetworkServiceProtocol {
     func fetchDashboard() async throws -> DashboardResponse
 }
 
-// Custom errors
+/// Custom error types (clear debugging + user readable errors)
 enum NetworkError: LocalizedError {
     case fileNotFound
     case decodingFailed
 
     var errorDescription: String? {
         switch self {
-        case .fileNotFound:
-            return "Local JSON file not found"
-        case .decodingFailed:
-            return "Failed to decode data"
+            case .fileNotFound:
+                return "Local JSON file not found"
+            case .decodingFailed:
+                return "Failed to decode data"
         }
     }
 }
 
-// Actual service
+/// Actual service implementation
 final class NetworkService: NetworkServiceProtocol {
-    func fetchDashboard() async throws -> DashboardResponse {
-        // Simulate API delay
-        try await Task.sleep(nanoseconds: 1000000000)
 
-        // Get JSON file from app bundle
+    func fetchDashboard() async throws -> DashboardResponse {
+
+        print("🟡 [Network] Start fetching...")
+
+        // Simulate API delay (this is cancellable)
+        try await Task.sleep(nanoseconds: 1_000_000_000)
+
+        // Important: Stop execution if task already cancelled
+        try Task.checkCancellation()
+
         guard let url = Bundle.main.url(forResource: "dashboard", withExtension: "json") else {
+            print("🔴 [Network] File not found")
             throw NetworkError.fileNotFound
         }
 
-        do {
-            let data = try Data(contentsOf: url)
+        let data = try Data(contentsOf: url)
 
-            // Decode JSON into model
+        // Check cancellation before heavy work (decoding)
+        try Task.checkCancellation()
+
+        do {
             let decoded = try JSONDecoder().decode(DashboardResponse.self, from: data)
+
+            print("🟢 [Network] Decoding success")
             return decoded
 
         } catch {
-            print("❌ Decoding error:", error)
+            print("🔴 [Network] Decoding failed:", error)
             throw NetworkError.decodingFailed
         }
     }

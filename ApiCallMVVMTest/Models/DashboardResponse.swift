@@ -1,13 +1,6 @@
-//
-//  DashboardResponse.swift
-//  ApiCallMVVMTest
-//
-//  Created by Harsh on 09/04/26.
-//
-
 import Foundation
 
-// This represents full API response
+/// Represents full dashboard API response
 struct DashboardResponse: Codable {
     let title: String
     let description: String
@@ -15,14 +8,14 @@ struct DashboardResponse: Codable {
     let stats: Stats
 }
 
-// Each user object
+/// Represents single user item
 struct User: Codable {
     let id: Int
     let name: String
     let email: String
 }
 
-// Stats object (nested JSON)
+/// Represents stats section from API
 struct Stats: Codable {
     let totalUsers: Int
     let activeUsers: Int

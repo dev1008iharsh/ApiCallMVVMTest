@@ -1,12 +1,7 @@
-//
-//  DashboardViewController.swift
-//  ApiCallMVVMTest
-//
-//  Created by Harsh on 09/04/26.
-//
 import UIKit
 
 final class DashboardViewController: UIViewController {
+
     // MARK: - Properties
 
     private let viewModel = DashboardViewModel()
@@ -27,11 +22,24 @@ final class DashboardViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         setupUI()
         bind()
+
         viewModel.fetch()
 
         title = "Dashboard"
+    }
+
+    /// Cancel API when screen disappears (important in real apps)
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        viewModel.cancel()
+    }
+
+    deinit {
+        print("💀 DashboardViewController Deinit")
     }
 
     // MARK: - Binding
@@ -46,16 +54,20 @@ final class DashboardViewController: UIViewController {
         }
     }
 
+    // MARK: - State Handling
+
     private func handle(_ state: DashboardViewModel.State) {
         switch state {
-        case .loading:
-            print("🔄 Loading...")
 
-        case let .success(data):
-            updateUI(data)
+            case .loading:
+                print("🔄 [VC] Loading...")
 
-        case let .failure(error):
-            print("❌ Error:", error)
+            case let .success(data):
+                print("🟢 [VC] Success")
+                updateUI(data)
+
+            case let .failure(error):
+                print("🔴 [VC] Error:", error)
         }
     }
 
@@ -86,7 +98,7 @@ final class DashboardViewController: UIViewController {
             titleLabel,
             descriptionLabel,
             statsLabel,
-            tableView,
+            tableView
         ])
 
         stack.axis = .vertical
@@ -99,7 +111,7 @@ final class DashboardViewController: UIViewController {
             stack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
             stack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             stack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            stack.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            stack.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
 }
@@ -107,11 +119,13 @@ final class DashboardViewController: UIViewController {
 // MARK: - TableView
 
 extension DashboardViewController: UITableViewDataSource {
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         users.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
         let user = users[indexPath.row]
 
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath)
